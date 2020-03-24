@@ -1,207 +1,141 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
-function App() {
-
-    var operadorP, operadorS, clickOperador, resultado, visualizacion;
-
-    operadorP = '';
-    operadorS = '';
-    clickOperador = '';
-    resultado = '';
-    visualizacion = '';
+import {ButtonNumber, CleanButtonDEL, CleanButtonAC, OperationButton, ResultButton} from './calcButton';
 
 
-    function valor0() {
-        if(clickOperador === ''){
-            operadorP += '0';
-        }else{
-            operadorS += '0';
+
+function App(){
+
+    //-------------DISPLAY UPDATE
+    const [a, b] =React.useState('');
+
+    //-------------ADD NUMBERS AND OPERATORS
+    let arrayNumber = [], arrayOperator = [];
+    let newValue;
+
+    console.log(newValue);
+
+    //NUMBERS
+    const addNumber = n => {
+        let indexNumber,Value;
+
+        indexNumber = arrayNumber.length - 1;
+
+        //Add data to array
+        if(arrayNumber.length > arrayOperator.length){
+
+            Value = String(arrayNumber[indexNumber][0].slice(0));
+            newValue = Value + String(n);
+            arrayNumber[indexNumber][0] = newValue;
+
+
+        }else if (arrayNumber.length === arrayOperator.length){
+            arrayNumber.push([String(n)]);
         }
-    }
 
-    function valor1() {
-        if(clickOperador === ''){
-            operadorP += '1';
-        }else{
-            operadorS += '1';
+        console.log(arrayNumber);
+        console.log(newValue);
+    };
+
+
+    //OPERATORS
+    const addOperator = n => {
+
+        if(arrayNumber.length === 0){
+            alert("Es necesario insertar un número");
+        }else if(arrayNumber.length > arrayOperator.length){
+            arrayOperator.push(n);
+        }else if(arrayNumber.length === arrayOperator.length){
+            arrayOperator.pop();
+            arrayOperator.push(n);
         }
-    }
+        console.log(arrayOperator);
+    };
 
-    function valor2() {
-        if(clickOperador === ''){
-            operadorP += '2';
-            console.log(operadorP);
-        }else{
-            operadorS += '2';
-            console.log(operadorS);
+
+    //-------------DELETE
+
+    //TOTAL DELETE
+    const totalDelete = () => {
+        arrayNumber = [];
+        arrayOperator = [];
+        newValue = "";
+        console.log(arrayNumber);
+        console.log(newValue);
+    };
+
+    //PARTIAL DELETE
+    const partialDelete = () => {
+        let indexNumberPD, ValuePD;
+        indexNumberPD = arrayNumber.length - 1;
+
+        ValuePD = String(arrayNumber[indexNumberPD][0].slice(0, -1));
+        arrayNumber[indexNumberPD][0] = ValuePD;
+        newValue = ValuePD;
+
+        console.log(arrayNumber);
+        console.log(newValue);
+    };
+
+    //RESULT
+    const calResult = () => {
+        let result;
+        result = '';
+        //indexArrays = arrayNumber -1;
+        for(let i=0; i < arrayNumber.length; i++){
+            result += arrayNumber[i][0]
+            if(i < arrayNumber.length - 1) {
+                result += arrayOperator[i];
+            }
         }
-    }
-
-    function valor3() {
-        if(clickOperador === ''){
-            operadorP += '3';
-        }else{
-            operadorS += '3';
-        }
-    }
-
-    function valor4() {
-        if(clickOperador === ''){
-            operadorP += '4';
-        }else{
-            operadorS += '4';
-        }
-    }
-
-    function valor5() {
-        if(clickOperador === ''){
-            operadorP += '5';
-        }else{
-            operadorS += '5';
-        }
-    }
-
-    function valor6() {
-        if(clickOperador === ''){
-            operadorP += '6';
-        }else{
-            operadorS += '6';
-        }
-    }
-
-    function valor7() {
-        if(clickOperador === ''){
-            operadorP += '7';
-        }else{
-            operadorS += '7';
-        }
-    }
-
-    function valor8() {
-        if (clickOperador === '') {
-            operadorP += '8';
-        } else {
-            operadorS += '8';
-        }
-    }
-
-
-    function valor9() {
-        if(clickOperador === ''){
-            operadorP += '9';
-        }else{
-            operadorS += '9';
-        }
-    }
-
-    function punto() {
-        if(clickOperador === ''){
-            operadorP += '.';
-        }else{
-            operadorS += '.';
-        }
-    }
-
-    function resta() {
-        if(clickOperador === ''){
-            clickOperador = '-';
-        }else{
-            alert('No pueden haber dos operadores');
-        }
-    }
-
-    function sumar() {
-        if(clickOperador === ''){
-            clickOperador = '+';
-        }else{
-            alert('No pueden haber dos operadores');
-        }
-    }
-
-    function multi() {
-        if(clickOperador === ''){
-            clickOperador = '*';
-        }else{
-            alert('No pueden haber dos operadores');
-        }
-    }
-
-    function div() {
-        if(clickOperador === ''){
-            clickOperador = '/';
-        }else{
-            alert('No pueden haber dos operadores');
-        }
-    }
-
-    function limpiar() {
-        operadorP = '';
-        operadorS = '';
-        clickOperador = '';
-    }
-
-    function calc() {
-
-        operadorP = Number(operadorP);
-        operadorS = Number(operadorS);
-
-        resultado = eval(operadorP + ' ' + clickOperador + ' ' + operadorS);
-        console.log(operadorP);
-        console.log(operadorS);
-        console.log(clickOperador);
-
-
-        console.log(resultado);
-
-        visualizacion = resultado;
-
+        result = eval(result);
+        console.log(result);
     }
 
 
 
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
 
-        <h2>CALCULADORA</h2>
-        <div className={"calculadora"}>
-            <button onClick={limpiar} className={"button c"}>C</button>
-            <output name="visualizacion" For="visualizaciong" className={"resultado"}>{visualizacion}</output>
-            <button onClick={valor7} className={"button"}>7</button>
-            <button onClick={valor8} className={"button"}>8</button>
-            <button onClick={valor9} className={"button"}>9</button>
-            <button onClick={sumar} className={"button"}>+</button>
-            <button onClick={valor4} className={"button"}>4</button>
-            <button onClick={valor5} className={"button"}>5</button>
-            <button onClick={valor6} className={"button"}>6</button>
-            <button onClick={resta} className={"button"}>-</button>
-            <button onClick={valor1} className={"button"}>1</button>
-            <button onClick={valor2} className={"button"}>2</button>
-            <button onClick={valor3} className={"button"}>3</button>
-            <button onClick={multi} className={"button"}>*</button>
-            <button onClick={valor0} className={"button"}>0</button>
-            <button onClick={punto} className={"button"}>.</button>
-            <button onClick={calc} className={"button"}>=</button>
-            <button onClick={div} className={"button"}>/</button>
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <div className={"calculator"}>
+                    <div className={"display"}>
+                        <output name="" htmlFor="" className={"result"}>{0}</output>
+                    </div>
+
+                    <div className={'clean-buttons'}>
+                        <CleanButtonDEL value={"DEL"} onClick={partialDelete} />
+                        <CleanButtonAC value={"AC"} onClick={totalDelete} />
+                    </div>
+
+                    <div className={"buttons"}>
+                        <ButtonNumber value={7} onClick={addNumber} />
+                        <ButtonNumber value={8} onClick={addNumber}/>
+                        <ButtonNumber value={9} onClick={addNumber}/>
+                        <OperationButton value={"+"} onClick={addOperator} />
+
+                        <ButtonNumber value={4} onClick={addNumber}/>
+                        <ButtonNumber value={5} onClick={addNumber}/>
+                        <ButtonNumber value={6} onClick={addNumber}/>
+                        <OperationButton value={"-"} onClick={addOperator}/>
+
+                        <ButtonNumber value={1} onClick={addNumber}/>
+                        <ButtonNumber value={2} onClick={addNumber}/>
+                        <ButtonNumber value={3} onClick={addNumber}/>
+                        <OperationButton value={"*"} onClick={addOperator} />
+
+                        <ButtonNumber value={0} onClick={addNumber}/>
+                        <ButtonNumber value={"."} onClick={addNumber} />
+                        <ResultButton value={"="} onClick={calResult} />
+                        <OperationButton value={"/"} onClick={addOperator} />
+                    </div>
+                </div>
+            </header>
         </div>
-      </header>
-    </div>
-  );
+    );
 }
+
 
 export default App;
