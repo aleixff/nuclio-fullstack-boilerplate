@@ -7,13 +7,11 @@ import {ButtonNumber, CleanButtonDEL, CleanButtonAC, OperationButton, ResultButt
 function App(){
 
     //-------------DISPLAY UPDATE
-    const [a, b] =React.useState('');
 
     //-------------ADD NUMBERS AND OPERATORS
     let arrayNumber = [], arrayOperator = [];
     let newValue;
 
-    console.log(newValue);
 
     //NUMBERS
     const addNumber = n => {
@@ -24,17 +22,25 @@ function App(){
         //Add data to array
         if(arrayNumber.length > arrayOperator.length){
 
-            Value = String(arrayNumber[indexNumber][0].slice(0));
+            Value = String(arrayNumber[indexNumber][0]);
             newValue = Value + String(n);
             arrayNumber[indexNumber][0] = newValue;
 
 
         }else if (arrayNumber.length === arrayOperator.length){
             arrayNumber.push([String(n)]);
+            if(arrayNumber.length === 1) {
+                Value = String(arrayNumber[0][0]);
+            }else{
+                Value = String(arrayNumber[arrayNumber.length - 1][0]);
+            }
+            newValue = Value;
         }
 
+        document.getElementById("2").value = newValue;
+
         console.log(arrayNumber);
-        console.log(newValue);
+
     };
 
 
@@ -49,7 +55,8 @@ function App(){
             arrayOperator.pop();
             arrayOperator.push(n);
         }
-        console.log(arrayOperator);
+
+         console.log(arrayOperator);
     };
 
 
@@ -60,8 +67,10 @@ function App(){
         arrayNumber = [];
         arrayOperator = [];
         newValue = "";
+
+        document.getElementById("2").value = newValue;
         console.log(arrayNumber);
-        console.log(newValue);
+
     };
 
     //PARTIAL DELETE
@@ -73,8 +82,9 @@ function App(){
         arrayNumber[indexNumberPD][0] = ValuePD;
         newValue = ValuePD;
 
+        document.getElementById("2").value = newValue;
         console.log(arrayNumber);
-        console.log(newValue);
+
     };
 
     //RESULT
@@ -83,17 +93,17 @@ function App(){
         result = '';
         //indexArrays = arrayNumber -1;
         for(let i=0; i < arrayNumber.length; i++){
-            result += arrayNumber[i][0]
+            result += arrayNumber[i][0];
             if(i < arrayNumber.length - 1) {
                 result += arrayOperator[i];
             }
         }
         result = eval(result);
-        console.log(result);
-    }
+        newValue = result;
 
+        document.getElementById("2").value = newValue;
 
-
+    };
 
 
 
@@ -102,7 +112,7 @@ function App(){
             <header className="App-header">
                 <div className={"calculator"}>
                     <div className={"display"}>
-                        <output name="" htmlFor="" className={"result"}>{0}</output>
+                        <output id="2" name="display" className="result">''</output>
                     </div>
 
                     <div className={'clean-buttons'}>
